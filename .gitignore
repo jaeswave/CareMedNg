@@ -1,0 +1,18 @@
+# Create .gitignore with proper content
+@"
+node_modules/
+.env
+dist/
+build/
+.DS_Store
+*.log
+.vscode/
+.idea/
+coverage/
+"@ | Out-File -FilePath .gitignore -Encoding utf8
+
+# Verify it was created
+ls -Force
+
+# Check the content
+Get-Content .gitignore
