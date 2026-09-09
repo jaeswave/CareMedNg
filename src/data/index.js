@@ -9,6 +9,8 @@ import amuwoCardioFetalFlyer from "../assets/amuwo/amuwo-cardio-fetal-flyer.jpg"
 import amuwoCtgFlyer from "../assets/amuwo/amuwo-ctg-flyer.jpg";
 import amuwoBppBrochure from "../assets/amuwo/amuwo-bpp-brochure.jpg";
 import amuwoPartnershipFlyer from "../assets/amuwo/amuwo-partnership-flyer.jpg";
+import new1 from "../assets/amuwo/new1.png";
+import newimg from "../assets/amuwo/newimg.png";
 
 export const navLinks = [
   { label: "Home", path: "/" },
@@ -20,7 +22,7 @@ export const navLinks = [
 
 export const howItWorks = [
   {
-    number: 1,
+    number: 1,  
     title: "Choose a Service",
     description:
       "Select from available diagnostic and medical slots (starting with Holter ECG).",
@@ -327,6 +329,14 @@ export const amuwoGallery = [
   },
   {
     src: amuwoPartnershipFlyer,
+    alt: "Amuwo Odofin Maternal & Child Centre and Caremed Connect partnership flyer",
+  },
+  {
+    src: new1,
+    alt: "Amuwo Odofin Maternal & Child Centre and Caremed Connect partnership flyer",
+  },
+  {
+    src: newimg,
     alt: "Amuwo Odofin Maternal & Child Centre and Caremed Connect partnership flyer",
   },
 ];

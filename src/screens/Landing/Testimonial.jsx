@@ -1,216 +1,140 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import TestimonialCard from "../../components/TestimonialCard";
-import { testimonials } from "../../data";
+
+const testimonials = [
+  {
+    name: "Mrs. Adaeze Okonkwo",
+    role: "Expectant Mother",
+    location: "Amuwo Odofin, Lagos",
+    quote:
+      "I was worried about my baby not moving as much. My doctor referred me for a BPP and CTG at Amuwo MCC through Caremed Connect. The staff were calm, professional and explained everything. I left feeling reassured.",
+    rating: 5,
+    initial: "A",
+  },
+  {
+    name: "Dr. Emmanuel Adebayo",
+    role: "Consultant Obstetrician",
+    location: "Lagos",
+    quote:
+      "Referring patients to Caremed Connect has been seamless. Their reporting is timely, the staff are professional, and my patients always give excellent feedback on their experience.",
+    rating: 5,
+    initial: "E",
+  },
+  {
+    name: "Mr. Kunle Fashola",
+    role: "Cardiac Patient",
+    location: "Lagos",
+    quote:
+      "I needed an ECG and echocardiogram after experiencing occasional palpitations. Caremed Connect made it easy to access without long waits. Clear process, professional service.",
+    rating: 5,
+    initial: "K",
+  },
+  {
+    name: "Mrs. Ngozi Eze",
+    role: "Mother",
+    location: "Amuwo Odofin",
+    quote:
+      "My baby needed a paediatric ultrasound and the team at the Amuwo MCC centre were so gentle and patient. I will recommend Caremed Connect to every mother I know.",
+    rating: 5,
+    initial: "N",
+  },
+];
 
 const Testimonial = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [direction, setDirection] = useState(0); // 0: no direction, 1: forward, -1: backward
+  const [idx, setIdx] = useState(0);
+  const [dir, setDir] = useState(1);
 
   useEffect(() => {
-    if (!isAutoPlaying) return;
+    const id = setInterval(() => {
+      setDir(1);
+      setIdx((i) => (i + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(id);
+  }, []);
 
-    const interval = setInterval(() => {
-      setDirection(1);
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, [isAutoPlaying, testimonials.length]);
-
-  const nextSlide = () => {
-    setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-    setIsAutoPlaying(false);
+  const go = (next) => {
+    setDir(next > idx ? 1 : -1);
+    setIdx(next);
   };
 
-  const prevSlide = () => {
-    setDirection(-1);
-    setCurrentIndex(
-      (prev) => (prev - 1 + testimonials.length) % testimonials.length
-    );
-    setIsAutoPlaying(false);
-  };
-
-  const goToSlide = (index) => {
-    setDirection(index > currentIndex ? 1 : -1);
-    setCurrentIndex(index);
-    setIsAutoPlaying(false);
-  };
-
-  // Animation variants for framer-motion
   const variants = {
-    enter: (direction) => ({
-      x: direction > 0 ? 300 : -300,
-      opacity: 0,
-      scale: 0.9,
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      scale: 1,
-    },
-    exit: (direction) => ({
-      x: direction < 0 ? 300 : -300,
-      opacity: 0,
-      scale: 0.9,
-    }),
+    enter: (d) => ({ x: d > 0 ? 200 : -200, opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (d) => ({ x: d < 0 ? 200 : -200, opacity: 0 }),
   };
+
+  const t = testimonials[idx];
 
   return (
-    <section className="w-full min-h-screen flex items-center bg-gradient-to-br from-blue-50 to-indigo-100 py-20 relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute inset-0 overflow-hidden z-0">
-        {/* Soft gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/70 via-white to-indigo-100/70"></div>
+    <section className="w-full py-24 bg-gradient-to-br from-customBlue to-blue-700 font-outfit overflow-hidden relative">
+      <div className="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full translate-x-1/3 -translate-y-1/2" />
+      <div className="absolute bottom-0 left-0 w-72 h-72 bg-white/5 rounded-full -translate-x-1/3 translate-y-1/2" />
 
-        {/* Medical icons pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <svg
-            className="w-full h-full"
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-          >
-            {/* Medical cross icons */}
-            <path
-              d="M10,10 L14,10 L14,6 L18,6 L18,10 L22,10 L22,14 L18,14 L18,18 L14,18 L14,14 L10,14 Z"
-              fill="#3b82f6"
-            />
-            <path
-              d="M80,20 L84,20 L84,24 L88,24 L88,28 L84,28 L84,24 L80,24 Z"
-              fill="#3b82f6"
-            />
-            <path
-              d="M70,70 L74,70 L74,74 L78,74 L78,78 L74,78 L74,74 L70,74 Z"
-              fill="#6366f1"
-            />
-            <path
-              d="M30,80 L34,80 L34,84 L38,84 L38,88 L34,88 L34,84 L30,84 Z"
-              fill="#6366f1"
-            />
-          </svg>
-        </div>
-
-        {/* Floating elements */}
-        <div className="absolute top-20 left-10 w-24 h-24 rounded-full bg-blue-200/30"></div>
-        <div className="absolute bottom-20 right-10 w-28 h-28 rounded-full bg-indigo-200/30"></div>
-        <div className="absolute top-1/3 right-1/4 w-20 h-20 rounded-full bg-blue-100/40"></div>
-
-        {/* Quote marks */}
-        <div
-          className="absolute top-1/4 left-1/4 opacity-5 text-blue-300"
-          style={{ fontSize: "15rem" }}
+      <div className="relative z-10 w-[90%] max-w-4xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-14"
         >
-          "
-        </div>
-        <div
-          className="absolute bottom-1/4 right-1/4 opacity-5 text-indigo-300"
-          style={{ fontSize: "15rem" }}
-        >
-          "
-        </div>
-      </div>
-
-      <div className="w-[90%] mx-auto max-w-4xl z-10 px-4">
-        <div className="text-center mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-4xl font-bold text-gray-800 sm:text-5xl"
-          >
+          <span className="inline-block text-blue-200 text-sm font-bold uppercase tracking-widest mb-3">
+            Patient Stories
+          </span>
+          <h2 className="text-4xl font-bold text-white mb-3">
             What Our Patients Say
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto"
-          >
-            Real experiences from real people who have trusted us with their
-            healthcare needs
-          </motion.p>
+          </h2>
+          <p className="text-blue-200 max-w-xl mx-auto">
+            Real experiences from mothers, patients, and doctors who trust
+            Caremed Connect.
+          </p>
+        </motion.div>
+
+        <div className="relative min-h-[280px] flex items-center justify-center">
+          <AnimatePresence custom={dir} initial={false}>
+            <motion.div
+              key={idx}
+              custom={dir}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="absolute w-full"
+            >
+              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-3xl p-8 sm:p-10">
+                <div className="flex items-center gap-1 mb-5">
+                  {Array.from({ length: t.rating }).map((_, i) => (
+                    <span key={i} className="text-yellow-300 text-lg">
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <p className="text-white text-lg leading-relaxed italic mb-7">
+                  "{t.quote}"
+                </p>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-lg">
+                    {t.initial}
+                  </div>
+                  <div>
+                    <p className="font-bold text-white">{t.name}</p>
+                    <p className="text-blue-200 text-sm">
+                      {t.role} · {t.location}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
-        <div className="relative flex items-center justify-center">
-          {/* Previous button */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 bg-white rounded-full p-2 shadow-md transition-all hover:scale-110 md:-translate-x-6 md:p-3 z-20"
-            aria-label="Previous testimonial"
-          >
-            <svg
-              className="w-5 h-5 text-gray-700 md:w-6 md:h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-
-          {/* Testimonial card container */}
-          <div className="w-full max-w-2xl mx-4 h-96 flex items-center justify-center overflow-hidden">
-            <AnimatePresence custom={direction} initial={false}>
-              <motion.div
-                key={currentIndex}
-                custom={direction}
-                variants={variants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                className="w-full absolute"
-              >
-                <TestimonialCard
-                  name={testimonials[currentIndex].name}
-                  location={testimonials[currentIndex].location}
-                  quote={testimonials[currentIndex].quote}
-                  rating={testimonials[currentIndex].rating}
-                  isActive={true}
-                />
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Next button */}
-          <button
-            onClick={nextSlide}
-            className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 bg-white rounded-full p-2 shadow-md transition-all hover:scale-110 md:translate-x-6 md:p-3 z-20"
-            aria-label="Next testimonial"
-          >
-            <svg
-              className="w-5 h-5 text-gray-700 md:w-6 md:h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
-        </div>
-
-        {/* Dots indicator */}
-        <div className="flex justify-center mt-8 space-x-3">
-          {testimonials.map((_, index) => (
+        <div className="flex justify-center gap-3 mt-8">
+          {testimonials.map((_, i) => (
             <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all ${
-                index === currentIndex ? "bg-blue-500 scale-125" : "bg-gray-300"
-              }`}
-              aria-label={`Go to testimonial ${index + 1}`}
+              key={i}
+              onClick={() => go(i)}
+              className={`h-2 rounded-full transition-all duration-300 ${i === idx ? "bg-white w-6" : "bg-white/30 w-2"}`}
+              aria-label={`Testimonial ${i + 1}`}
             />
           ))}
         </div>
