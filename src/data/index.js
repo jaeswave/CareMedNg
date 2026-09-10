@@ -342,12 +342,13 @@ export const amuwoGallery = [
 ];
 
 export const amuwoContact = {
-  phone: "+2348077779089",
-  phoneDisplay: "0807 777 9089",
-  email: "support@caremedng.com",
-  address: "Amuwo Odofin Maternal & Child Centre, Amuwo Odofin, Lagos",
+  phone: "+2348077779098",
+  phoneDisplay: "08077779098",
+  email: "info@caremedconnect.com",
+  address: "Amuwo Odofin Maternal & Child Centre, Amuwo Odofin, Lagos State",
+  website: "www.caremedconnect.com",
   whatsappLink:
-    "https://wa.me/2348077779089?text=Hello%2C%20I%27d%20like%20to%20book%20a%20Cardio-Fetal%20Diagnostic%20service%20at%20Amuwo%20MCC",
+    "https://wa.me/2348077779098?text=Hello%2C%20I%27d%20like%20to%20book%20a%20Cardio-Fetal%20Diagnostic%20service%20at%20Amuwo%20MCC",
 };
 
 // Biophysical Profile (BPP) reference scoring, sourced from the Amuwo MCC
