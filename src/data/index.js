@@ -11,6 +11,7 @@ import amuwoBppBrochure from "../assets/amuwo/amuwo-bpp-brochure.jpg";
 import amuwoPartnershipFlyer from "../assets/amuwo/amuwo-partnership-flyer.jpg";
 import new1 from "../assets/amuwo/new1.png";
 import newimg from "../assets/amuwo/newimg.png";
+import bppLeaflet from "../assets/amuwo/bpp-leaflet.jpg";
 
 export const navLinks = [
   { label: "Home", path: "/" },
@@ -267,7 +268,6 @@ export   const partnerOptions = [
 
 
   // ---------------------------------------------------------------------------
-// Amuwo Odofin Maternal & Child Centre — Cardio-Fetal Diagnostic Partnership
 // ---------------------------------------------------------------------------
 export const amuwoServices = [
   {
@@ -338,6 +338,10 @@ export const amuwoGallery = [
   {
     src: newimg,
     alt: "Amuwo Odofin Maternal & Child Centre and Caremed Connect partnership flyer",
+  },
+  {
+    src: bppLeaflet,
+    alt: "Biophysical Profile (BPP) — What is it and what does it look at?",
   },
 ];
 
